@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class Ground : MonoBehaviour
@@ -7,7 +5,7 @@ public class Ground : MonoBehaviour
     float speed = 0.5f;
     Renderer rend;
     private PlayerController playerControllerScript;
-    void Start()
+    void Awake()
     {
         rend = GetComponent<Renderer>();
         playerControllerScript = GameObject.Find("Player").GetComponent<PlayerController>();
@@ -16,12 +14,9 @@ public class Ground : MonoBehaviour
    
     void Update()
     {
-        if (playerControllerScript.gameOver == false) 
-        {
-            float offset = Time.time * -speed;
-            rend.material.SetTextureOffset("_MainTex", new Vector2(0, offset));
-        
-        }
-        
+        if (playerControllerScript.gameOver) return;
+
+        float offset = Time.time * -speed;
+        rend.material.SetTextureOffset("_MainTex", new Vector2(0, offset));
     }
 }

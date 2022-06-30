@@ -9,41 +9,45 @@ public class PlayerController : MonoBehaviour
     public float gravityModifier = 5;
     private Rigidbody rb;
     private Animator playerAnim;
-    public bool gameOver = false; 
-   
+    //GameManager gameManagerScript;
+    public bool gameOver = false;
 
-    void Start()
+
+    void Awake()
     {
+       // gameManagerScript = FindObjectOfType<GameManager>();
         rb = GetComponent<Rigidbody>();
-        Physics.gravity *= gravityModifier;
+        Physics.gravity = new Vector3 (0, -9.81f * gravityModifier) ;
         playerAnim = GetComponent<Animator>();
     }
 
-   
+
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Space) && isGround && gameOver== false) 
+        if (Input.anyKey && isGround && gameOver == false)
         {
-            
+
             rb.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
             isGround = false;
             playerAnim.SetTrigger("Jump_trig");
-            Debug.Log("key!");
+            Debug.Log(jumpForce);
         }
     }
 
     private void OnCollisionEnter(Collision collision)
     {
-       if (collision.gameObject.CompareTag("Ground")) 
-       {
+        if (collision.gameObject.CompareTag("Ground"))
+        {
             isGround = true;
-       } 
+        }
 
-       if (collision.gameObject.CompareTag("Obstacle")) 
-       {
+        if (collision.gameObject.CompareTag("Obstacle"))
+        {
             gameOver = true;
-            playerAnim.SetInteger("Death",1);
+            playerAnim.SetInteger("Death", 1);
             Debug.Log("aheo!");
-       }
+        }
     }
+
+    
 }

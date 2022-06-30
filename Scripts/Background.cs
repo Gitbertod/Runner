@@ -6,13 +6,12 @@ public class Background : MonoBehaviour
 {
     Vector3 startPos;
     private float repeatWidth;
-    void Start()
+    void Awake()
     {
         startPos = transform.position;
         repeatWidth = GetComponent<BoxCollider2D>().size.x / 2;
     }
 
-    // Update is called once per frame
     void Update()
     {
         

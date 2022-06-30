@@ -4,38 +4,33 @@ using UnityEngine;
 
 public class SpawnManager : MonoBehaviour
 {
-    public GameObject obstacelPrefab;
-    public float repeatRate = 0;
+    public GameObject[] obstacelPrefab;
+    public float repeatRate = 2;
     public float time = 0;
     private PlayerController playerControllerScript;
-    void Start()
+    void Awake()
     {
         playerControllerScript = GameObject.Find("Player").GetComponent<PlayerController>();
-        
-        
     }
 
     
     void Update()
     {
+
         time += Time.deltaTime;
         
-        if (time > repeatRate && playerControllerScript.gameOver == false) 
-
+        if (time > repeatRate && !playerControllerScript.gameOver) 
         {
             time = 0;
             repeatRate = Random.Range(1, 5);
             ObstaclesSpawn();
-            
         }  
-        
     }
 
     private void ObstaclesSpawn() 
     {
-        
-        Instantiate(obstacelPrefab,transform.position,transform.rotation);
-        
+        Instantiate(obstacelPrefab[Random.Range(0, 2)],transform.position,transform.rotation);
+      
     }
     
 }
